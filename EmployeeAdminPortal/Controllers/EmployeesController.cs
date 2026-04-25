@@ -20,6 +20,16 @@ namespace EmployeeAdminPortal.Controllers {
             return Ok(allEmployees);                            // Since this is an HTTP request we have to 'send a 200 response'
         }
 
+        [HttpGet]
+        [Route("{id:guid}")]
+        public IActionResult GetEmployeeById(Guid id) {
+            var employee = dbContext.Employees.Find(id);
+
+            if (employee == null) return NotFound("Employee ID does not exist!");
+
+            return Ok(employee);
+        }
+
         [HttpPost]
         public IActionResult AddEmployee(AddEmployeeDto addEmployeeDto) {
             // We use DTO (Data Transfer Object) here because it abstracts what code is visible on either side of our database.
