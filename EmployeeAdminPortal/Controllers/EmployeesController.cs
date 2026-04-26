@@ -3,6 +3,7 @@ using EmployeeAdminPortal.Models;
 using EmployeeAdminPortal.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EmployeeAdminPortal.Controllers {
     [Route("api/[controller]")] // <-- localhost:XXXX/api/employees
@@ -47,6 +48,30 @@ namespace EmployeeAdminPortal.Controllers {
             dbContext.SaveChanges();                            // THIS is what actually makes our changes real
 
             return Ok(employeeEntity);
+        }
+
+        [HttpGet]
+        [Route("filters")]
+        public IActionResult GetEmployeesFiltered([FromQuery] SearchFiltersDto searchFiltersDto) {
+            var allEmployeesQuery = dbContext.Employees.AsQueryable();
+
+            if (!searchFiltersDto.Name.IsNullOrEmpty()) {
+                allEmployeesQuery = allEmployeesQuery.Where(employee => employee.Name.Contains(searchFiltersDto.Name));
+            }
+
+            if (!searchFiltersDto.Email.IsNullOrEmpty()) {
+                allEmployeesQuery = allEmployeesQuery.Where(employee => employee.Email.Contains(searchFiltersDto.Email));
+            }
+
+            if (searchFiltersDto.MinSalaray.HasValue) {
+                allEmployeesQuery = allEmployeesQuery.Where(employee => employee.Salary >= searchFiltersDto.MinSalaray);
+            }
+
+            if (searchFiltersDto.MaxSalary.HasValue) {
+                allEmployeesQuery = allEmployeesQuery.Where(employee => employee.Salary <= searchFiltersDto.MaxSalary);
+            }
+
+            return Ok(allEmployeesQuery.ToList());
         }
 
         [HttpPut]
