@@ -16,9 +16,19 @@ namespace EmployeeAdminPortal.Controllers {
         }
 
         [HttpGet]
+        [Route("all")]
         public IActionResult GetAllEmployees() {
             var allEmployees = dbContext.Employees.ToList();    // Conect to DB (dbContext) and return all elements of table
             return Ok(allEmployees);                            // Since this is an HTTP request we have to 'send a 200 response'
+        }
+
+        [HttpGet]
+        public IActionResult GetEmployees([FromQuery] int page = 1, int pageSize = 10) {
+
+            var employees = dbContext.Employees.OrderBy(e => e.Id)
+                .Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            return Ok(employees);
         }
 
         [HttpGet]
@@ -52,8 +62,8 @@ namespace EmployeeAdminPortal.Controllers {
 
         [HttpGet]
         [Route("filters")]
-        public IActionResult GetEmployeesFiltered([FromQuery] SearchFiltersDto searchFiltersDto) {
-            var allEmployeesQuery = dbContext.Employees.AsQueryable();
+        public IActionResult GetEmployeesFiltered([FromQuery] SearchFiltersDto searchFiltersDto, int page = 1, int pageSize = 10) {
+            var allEmployeesQuery = dbContext.Employees.OrderBy(e => e.Id).AsQueryable();
 
             if (!searchFiltersDto.Name.IsNullOrEmpty()) {
                 allEmployeesQuery = allEmployeesQuery.Where(employee => employee.Name.Contains(searchFiltersDto.Name));
@@ -71,7 +81,7 @@ namespace EmployeeAdminPortal.Controllers {
                 allEmployeesQuery = allEmployeesQuery.Where(employee => employee.Salary <= searchFiltersDto.MaxSalary);
             }
 
-            return Ok(allEmployeesQuery.ToList());
+            return Ok(allEmployeesQuery.Skip((page - 1) * pageSize).Take(pageSize).ToList());
         }
 
         [HttpPut]
