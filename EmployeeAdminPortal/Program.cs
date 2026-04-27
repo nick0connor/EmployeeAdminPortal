@@ -29,6 +29,11 @@ internal class Program {
 
         app.MapControllers();
 
+        app.UseExceptionHandler("/error");
+        app.Map("/error", (HttpContext context) => {
+            return Results.Problem("An error occurred!");
+        });
+
         app.Run();
     }
 }
