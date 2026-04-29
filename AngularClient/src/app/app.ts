@@ -1,23 +1,10 @@
 import { Component, signal } from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
-import { Home } from './home/home';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink],
-  template: `
-    <main>
-      <a [routerLink]="['/']">
-        <header class="brand-name">
-          <img class="brand-logo" src="/public/logo.svg" alt="logo" aria-hidden="true" />
-        </header>
-      </a>
-      <section class="content">
-        <router-outlet />
-      </section>
-    </main>
-  `,
+  templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
-}
+export class App {}

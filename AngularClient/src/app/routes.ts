@@ -1,18 +1,22 @@
 import {Routes} from '@angular/router';
 import {Home} from './home/home';
-import {Details} from './details/details';
 
 const routeConfig: Routes = [
   {
     path: '',
     component: Home,
     title: 'Home page',
-  },
-  {
-    path: 'details/:id',
-    component: Details,
-    title: 'Home details',
-  },
+  }//,
+  // {
+  //   path: 'lookup/:id',
+  //   component: Lookup,
+  //   title: 'Find employee by ID',
+  // },
+  // {
+  //   path: 'filter',
+  //   component: Search,
+  //   title: 'Search for Employees',
+  // },
 ];
 
 export default routeConfig;
