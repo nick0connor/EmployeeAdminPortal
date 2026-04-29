@@ -36,6 +36,10 @@
 <br>
 <p>Editing is {{editsEnabled ? "Permitted" : "Blocked"}}</p>
 <button (click)="toggleUpdates()">Toggle Edits</button>
+
+
+<br><br><br><br>
+<button (click)="deleteUser()" style="color:red">DELETE (NO SECOND CHANCES)</button>
 }
 @else {
 <h1>Error getting user</h1>

@@ -79,4 +79,9 @@ export class EmployeeDetails {
       }
     });
   }
+
+  deleteUser() {
+    this.employeeService.deleteEmployee(this.employee!.id).subscribe();
+    this.router.navigate(['/']);
+  }
 }
