@@ -1,0 +1,28 @@
+<form [formGroup]="newEmployeeForm" (submit)="createEmployee()">
+    <h3>Employee Information:</h3>
+
+    <label for="newName">Name: </label>
+    <input id="newName" type="text" formControlName="newName" required="true" />
+    <br>
+    <label for="newEmail">Email: </label>
+    <input id="newEmail" type="text" formControlName="newEmail" required="true" />
+    <br>
+    <label for="newSalary">Salary: </label>
+    <input id="newSalary" type="number" formControlName="newSalary" required="true" />
+    <br><br>
+
+    <h3>Optional Info:</h3>
+    <label for="newPhone">Phone#: </label>
+    <input id="newPhone" type="text" formControlName="newPhone" />
+    <br>
+    <label for="newAddress">Address: </label>
+    <input id="newAddress" type="text" formControlName="newAddress" />
+    <br>
+
+    <label for="newNotes">Notes: </label>
+    <input id="newNotes" type="text" formControlName="newNotes" />
+    <br>
+
+    <br>
+    <button type="submit" class="primary">Add Employee</button>
+</form>
