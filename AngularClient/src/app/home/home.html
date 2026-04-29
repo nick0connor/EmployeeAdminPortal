@@ -1,3 +1,21 @@
+<section class="filters">
+  <form [formGroup]="filterForm" (submit)="filterResults()">
+    <label for="form-name">Name: </label>
+    <input id="form-name" type="text" placeholder="Enter Name Here" formControlName="formName" />
+
+    <label for="form-email">Email: </label>
+    <input id="form-email" type="text" placeholder="Enter Email Here" formControlName="formEmail" />
+
+    <label for="form-minSal">Minimum Salary: </label>
+    <input id="form-minSal" type="text" placeholder="Enter Minimum Salary" formControlName="formMinSal" />
+
+    <label for="form-maxSal">Maxium Salary: </label>
+    <input id="form-maxSal" type="text" placeholder="Enter Maxium Salary" formControlName="formMaxSal" />
+    <button type="submit" class="primary">APPLY FILTERS</button>
+  </form>
+</section>
+<hr>
+
 <button type="button" (click)="changePage(-1)">Prev Page</button>
 <p>  </p>
 <button type="button" (click)="changePage(1)">Next Page</button>
@@ -6,5 +24,6 @@
 <section class="employees">
   @for (employee of filteredEmployeeList; track employee.id){
     <p>{{ employee.name }}</p>
+    <!-- <app-employee-element [employee]="employee" /> -->
   }
 </section>
