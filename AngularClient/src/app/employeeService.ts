@@ -58,17 +58,17 @@ export class EmployeeService {
     }
 
     /******************************************** POST CALLS ********************************************/
-    addEmployee(employee: CreateEmployeeRequest) {
+    addEmployee(employee: CreateEmployeeRequest): Observable<EmployeeInfo> {
         return this.http.post<EmployeeInfo>(this.url, employee);
     }
 
     /******************************************** PUT CALLS *********************************************/
-    updateEmployee(id: string, employee: CreateEmployeeRequest) {
+    updateEmployee(id: string, employee: CreateEmployeeRequest): Observable<void> {
         return this.http.put<void>(`${this.url}/${id}`, employee);
     }
 
     /******************************************* DELETE CALLS *******************************************/
-    deleteEmployee(id: string) {
+    deleteEmployee(id: string): Observable<void> {
         return this.http.delete<void>(`${this.url}/${id}`)
     }
 }
