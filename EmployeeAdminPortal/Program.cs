@@ -15,6 +15,14 @@ internal class Program {
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+        builder.Services.AddCors(options => {
+            options.AddPolicy("AllowAll", policy => {
+                policy.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
+        });
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -33,6 +41,8 @@ internal class Program {
         app.Map("/error", (HttpContext context) => {
             return Results.Problem("An error occurred!");
         });
+
+        app.UseCors("AllowAll");
 
         app.Run();
     }
