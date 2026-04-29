@@ -12,6 +12,7 @@ const routeConfig: Routes = [
     path: 'details/:id',
     component: EmployeeDetails,
     title: 'All Details about an employee',
+    runGuardsAndResolvers: 'always'
   }
 ];
 
