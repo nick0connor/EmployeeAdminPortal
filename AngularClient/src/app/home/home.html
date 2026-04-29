@@ -1,1 +1,7 @@
-<p>home works!</p>
+<h2>Employees</h2>
+
+<section class="employees">
+  @for (employee of filteredEmployeeList; track $index){
+    <p>{{ employee.name }}</p>
+  }
+</section>
