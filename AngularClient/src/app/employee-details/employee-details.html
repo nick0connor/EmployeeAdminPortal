@@ -1,0 +1,42 @@
+@if (employee != null){
+<form [formGroup]="changeInfoForm" (submit)="updateEmployeeInfo()">
+  <h3>Employee Information:</h3>
+  <p>ID: {{ employee.id }}</p>
+
+  <label for="newName">Name: </label>
+  <input id="newName" type="text" formControlName="newName" placeholder={{employee.name}} [attr.disabled]="!editsEnabled || null" />
+  <br>
+  <label for="newEmail">Email: </label>
+  <input id="newEmail" type="text" formControlName="newEmail" placeholder={{employee.email}} [attr.disabled]="!editsEnabled || null" />
+  <br>
+  <label for="newSalary">Salary: </label>
+  <input id="newSalary" type="number" formControlName="newSalary" placeholder={{employee.salary}} [attr.disabled]="!editsEnabled || null" />
+  <br><br>
+
+  @if(editsEnabled || employee.phone || employee.address || employee.notes){<h3>Optional Info:</h3>}
+  @if(editsEnabled || employee.phone){
+    <label for="newPhone">Phone#: </label>
+    <input id="newPhone" type="text" formControlName="newPhone" placeholder={{employee.phone}} [attr.disabled]="!editsEnabled || null" />
+    <br>
+  }
+  @if(editsEnabled || employee.address){
+    <label for="newAddress">Address: </label>
+    <input id="newAddress" type="text" formControlName="newAddress" placeholder={{employee.address}} [attr.disabled]="!editsEnabled || null" />
+    <br>
+  }
+  @if(editsEnabled || employee.notes){
+    <label for="newNotes">Notes: </label>
+    <input id="newNotes" type="text" formControlName="newNotes" placeholder={{employee.notes}} [attr.disabled]="!editsEnabled || null" />
+    <br>
+  }
+
+  <br>
+  <button type="submit" class="primary" (click)="updateEmployeeInfo()">Make Changes</button>
+</form>
+<br>
+<p>Editing is {{editsEnabled ? "Permitted" : "Blocked"}}</p>
+<button (click)="toggleUpdates()">Toggle Edits</button>
+}
+@else {
+<h1>Error getting user</h1>
+}
