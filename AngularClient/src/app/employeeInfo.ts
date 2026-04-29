@@ -1,9 +1,10 @@
 export interface EmployeeInfo {
-    id: string;
-    name: string;
-    email: string;
+    id:     string;
+    name:   string;
+    email:  string;
     salary: number;
-    phone: string;
-    notes: string;
-    address: string;
+    
+    phone?:   string | null;
+    notes?:   string | null;
+    address?: string | null;
 }
