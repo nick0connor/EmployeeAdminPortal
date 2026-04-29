@@ -23,7 +23,7 @@
 
 <section class="employees">
   @for (employee of filteredEmployeeList; track employee.id){
-    <p>{{ employee.name }}</p>
-    <!-- <app-employee-element [employee]="employee" /> -->
+     <app-employee-display [employeeObject]="employee" />
+     <br>
   }
 </section>

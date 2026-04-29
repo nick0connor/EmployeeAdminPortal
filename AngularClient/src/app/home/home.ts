@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FilterEmployeeRequest } from '../filterEmployeeRequest';
+import { EmployeeDisplay } from "../employee-display/employee-display";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, EmployeeDisplay],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
