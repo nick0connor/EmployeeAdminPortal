@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { EmployeeService } from '../employeeService';
 import { EmployeeInfo } from '../employeeInfo';
 import { CommonModule } from '@angular/common';
@@ -16,6 +16,7 @@ export class Home {
   employeeService: EmployeeService = inject(EmployeeService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  cdr = inject(ChangeDetectorRef);
 
   filteredEmployeeList: EmployeeInfo[] = [];
   pageSize: number = 10;
@@ -23,7 +24,6 @@ export class Home {
 
   constructor() {
     this.route.queryParams.subscribe(params => {
-      console.log('init')
       const page = +(params['page'] ?? 1);
       this.pageNum = page;
       this.updateEmployeeList(page);
@@ -33,8 +33,8 @@ export class Home {
   updateEmployeeList(page: number) {
     this.employeeService.getEmployees(page, this.pageSize).subscribe({
       next: (data) => {
-        console.log("Data: ", data);
         this.filteredEmployeeList = data;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error("Api Error: ", err);
