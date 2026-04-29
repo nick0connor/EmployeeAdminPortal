@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HousingLocation } from '../housing-location/housing-location';
 import {HousingLocationInfo} from '../housinglocation';
+import { Housing } from '../housing';
 
 @Component({
   selector: 'app-home',
@@ -8,27 +9,49 @@ import {HousingLocationInfo} from '../housinglocation';
   template: `
     <section>
       <form>
-        <input type="text" placeholder="Filter by city" />
-        <button class="primary" type="button">Search</button>
+        <input type="text" placeholder="Filter by city" #filter />
+        <button class="primary" type="button" (click)="filterResults(filter.value)">Search</button>
       </form>
     </section>
     <section class="results">
-      <app-housing-location />
+      @for (housingLocationObj of filteredLocationList; track $index) {
+        <app-housing-location [housingLocation]="housingLocationObj"/>
+      }
     </section>`,
   styleUrl: './home.css',
 })
 export class Home {
 
-  readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
+  housingLocationList: HousingLocationInfo[] = [];
+  housingService: Housing = inject(Housing);
 
-  housingLocation: HousingLocationInfo = {
-    id: 9999,
-    name: 'Test Home',
-    city: 'Test city',
-    state: 'ST',
-    photo: `${this.baseUrl}/example-house.jpg`,
-    availableUnits: 99,
-    wifi: true,
-    laundry: false,
-  };
+  filteredLocationList : HousingLocationInfo[] = [];  
+
+  constructor() {
+    this.housingLocationList = this.housingService.getAllHousingLocations();
+    this.filteredLocationList = this.housingLocationList;
+    
+    /* To use the async REST version, constructor would look like:
+
+    this.housingService
+      .getAllHousingLocationsREST()
+      .then((housingLocationList : housingLocationInfo[]) => {
+        this.housingLocationList = housingLocationList;
+        this.filteredLocationList = housingLocationList;
+        this.changeDetectorRef.markForCheck();
+      });
+
+    */
+  }
+
+  filterResults(text: string) {
+    if (!text){
+      this.filteredLocationList = this.housingLocationList;
+      return;
+    }
+
+    this.filteredLocationList = this.housingLocationList.filter((hLocation) => 
+      hLocation?.city.toLowerCase().includes(text.toLowerCase())
+    );
+  }
 }
