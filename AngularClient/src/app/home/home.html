@@ -1,7 +1,10 @@
-<h2>Employees</h2>
+<button type="button" (click)="changePage(-1)">Prev Page</button>
+<p>  </p>
+<button type="button" (click)="changePage(1)">Next Page</button>
+<hr>
 
 <section class="employees">
-  @for (employee of filteredEmployeeList; track $index){
+  @for (employee of filteredEmployeeList; track employee.id){
     <p>{{ employee.name }}</p>
   }
 </section>
